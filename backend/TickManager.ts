@@ -7,7 +7,7 @@ const log = logger('tick');
 class TickManager {
   controller: Controller;
   timeout?: Timeout;
-  tickRate = 1;
+  tickRate = 3;
 
   constructor(kwargs: { controller: Controller }) {
     this.controller = kwargs.controller;

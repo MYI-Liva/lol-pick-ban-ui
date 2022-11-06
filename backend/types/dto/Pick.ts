@@ -7,6 +7,9 @@ export class Pick implements Actionable {
   champion!: Champion;
   isActive = false;
   displayName = '';
+  summonerId = 0;
+  accountId = 0;
+  puuid = 0;
   constructor(id: number) {
     this.id = id;
   }
