@@ -7,7 +7,7 @@ const log = logger('tick');
 class TickManager {
   controller: Controller;
   timeout?: Timeout;
-  tickRate = 3;
+  tickRate = 1;
 
   constructor(kwargs: { controller: Controller }) {
     this.controller = kwargs.controller;
@@ -19,6 +19,8 @@ class TickManager {
   }
 
   async runLoop(): Promise<void> {
+    const eogStats = await this.controller.dataProvider.getEogStats();
+    console.log(eogStats);
     const newState = await this.controller.dataProvider.getCurrentData();
 
     if (newState !== null) {

@@ -9,7 +9,7 @@ export class Pick implements Actionable {
   displayName = '';
   summonerId = 0;
   accountId = 0;
-  puuid = 0;
+  puuid = "";
   constructor(id: number) {
     this.id = id;
   }

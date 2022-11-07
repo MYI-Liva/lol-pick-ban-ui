@@ -58,6 +58,22 @@ class LeagueDataProviderService extends EventEmitter
     log.info('Waiting for LeagueClient to connect');
   }
 
+  async getEogStats(): Promise<CurrentState | null> {
+    if (!this.connectionInfo || !this.connectionInfo.port) {
+      log.debug('Not connected to LCU, but tried to get EOG data.');
+      return null
+    }
+
+    const response = await this.connector.request({
+      url: '/lol-end-of-game/v1/eog-stats-block',
+      method: 'GET'
+    })
+
+    let data = await response?.json();
+
+    return data;
+  }
+
   async getCurrentData(): Promise<CurrentState | null> {
     if (!this.connectionInfo || !this.connectionInfo.port) {
       log.debug('Not connected to LCU, but tried to get data.');

@@ -9,6 +9,7 @@ const log = logger('DataProviderService');
 
 export default interface DataProviderService extends EventEmitter {
   getCurrentData(): Promise<CurrentState | null>;
+  getEogStats(): Promise<Object | null>;
   cacheSummoners(session: Session): Promise<void>;
   getSummonerById(id: number): Summoner;
 }

@@ -76,6 +76,9 @@ class DataDragon {
       champion.splashCenteredImg = `https://raw.communitydragon.org/${this.state.getMajorMinorVersion()}/plugins/rcp-be-lol-game-data/global/default/v1/champion-splashes/${champion.key}/${champion.key}000.jpg`;
       champion.squareImg = `${this.state.getVersionCDN()}/img/champion/${champion.id}.png`;
       champion.loadingImg = `${this.state.getCDN()}/img/champion/loading/${champion.id}_0.jpg`;
+      champion.tileImg = `https://raw.communitydragon.org/${this.state.getMajorMinorVersion()}/plugins/rcp-be-lol-game-data/global/default/v1/champion-tiles/${champion.key}/${champion.key}000.jpg`;
+      champion.banVo = `https://raw.communitydragon.org/${this.state.getMajorMinorVersion()}/plugins/rcp-be-lol-game-data/global/default/v1/champion-ban-vo/${champion.key}.ogg`;
+      champion.pickVo = `https://raw.communitydragon.org/${this.state.getMajorMinorVersion()}/plugins/rcp-be-lol-game-data/global/default/v1/champion-choose-vo/${champion.key}.ogg`;
       return champion;
     }
     extendChampionLocal(champion: Champion): Champion {
@@ -83,6 +86,9 @@ class DataDragon {
       champion.splashCenteredImg = `/cache/${this.versions.n.champion}/champion/${champion.id}_centered_splash.jpg`;
       champion.squareImg = `/cache/${this.versions.n.champion}/champion/${champion.id}_square.png`;
       champion.loadingImg = `/cache/${this.versions.n.champion}/champion/${champion.id}_loading.jpg`;
+      champion.tileImg = `/cache/${this.versions.n.champion}/champion/${champion.id}_tile.jpg`;
+      champion.banVo = `/cache/${this.versions.n.champion}/champion/${champion.id}_ban_vo.ogg`;
+      champion.pickVo = `/cache/${this.versions.n.champion}/champion/${champion.id}_pick_vo.ogg`;
       return champion;
     }
 
@@ -130,15 +136,15 @@ class DataDragon {
           // eslint-disable-next-line @typescript-eslint/camelcase
           open_timeout: 0
         })
-            .then(function(resp) {
-              const out = fs.createWriteStream(targetPath);
-              out.write(resp.raw);
-              out.close();
-              resolve();
-            })
-            .catch(function(err) {
-              reject(err);
-            });
+        .then(function(resp) {
+          const out = fs.createWriteStream(targetPath);
+          out.write(resp.raw);
+          out.close();
+          resolve();
+        })
+        .catch(function(err) {
+          reject(err);
+        });
       });
 
       const tasks: Array<() => Promise<void>> = [];
@@ -149,6 +155,9 @@ class DataDragon {
         tasks.push(downloadFile(champion.splashImg, `${patchFolderChampion}/${champion.id}_splash.jpg`));
         tasks.push(downloadFile(champion.splashCenteredImg, `${patchFolderChampion}/${champion.id}_centered_splash.jpg`));
         tasks.push(downloadFile(champion.squareImg, `${patchFolderChampion}/${champion.id}_square.png`));
+        tasks.push(downloadFile(champion.tileImg, `${patchFolderChampion}/${champion.id}_tile.png`));
+        tasks.push(downloadFile(champion.banVo, `${patchFolderChampion}/${champion.id}_ban_vo.ogg`));
+        tasks.push(downloadFile(champion.pickVo, `${patchFolderChampion}/${champion.id}_pick_vo.ogg`));
       });
 
       this.summonerSpells.forEach(spell => {
@@ -166,7 +175,6 @@ class DataDragon {
       bar.start(tasks.length, 0);
       for (let i = 0; i < tasks.length; i = i + batchSize) {
         const currentTasks = tasks.slice(i, i + batchSize);
-
         await Promise.all(currentTasks.map(task => task()));
         bar.update(i + 1);
       }

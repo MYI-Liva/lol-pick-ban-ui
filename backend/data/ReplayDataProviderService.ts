@@ -39,6 +39,10 @@ export default class ReplayDataProviderService extends EventEmitter implements D
     // Nothing to do here - summoners are loaded already :)
   }
 
+  async getEogStats(): Promise<Object> {
+    return {};
+  }
+
   async getCurrentData(): Promise<CurrentState> {
     log.info(`${this.numberOfPoints - this.recording.dataPoints.length} / ${this.numberOfPoints}`);
 

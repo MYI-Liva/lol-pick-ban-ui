@@ -33,6 +33,9 @@ const convertTeam = (kwargs: { team: Array<Cell>; actions: Array<Action>; dataPr
       splashImg: champion ? champion.splashImg : '',
       splashCenteredImg: champion ? champion.splashCenteredImg : '',
       squareImg: champion ? champion.squareImg : '',
+      tileImg: champion ? champion.tileImg : '',
+      banVo: champion ? champion.banVo : '',
+      pickVo: champion ? champion.pickVo : '',
     };
 
     const summoner = kwargs.dataProvider.getSummonerById(cell.summonerId);
@@ -74,6 +77,9 @@ const convertTeam = (kwargs: { team: Array<Cell>; actions: Array<Action>; dataPr
       splashImg: champion ? champion.splashImg : '',
       splashCenteredImg: champion ? champion.splashCenteredImg : '',
       squareImg: champion ? champion.squareImg : '',
+      tileImg: champion ? champion.tileImg : '',
+      banVo: champion ? champion.banVo : '',
+      pickVo: champion ? champion.pickVo : '',
     };
 
     return ban;

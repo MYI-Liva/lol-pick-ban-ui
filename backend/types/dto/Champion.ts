@@ -6,5 +6,8 @@ export class Champion {
   splashCenteredImg = '';
   loadingImg = '';
   squareImg = '';
+  tileImg = '';
+  banVo = '';
+  pickVo = '';
   idName = '';
 }
